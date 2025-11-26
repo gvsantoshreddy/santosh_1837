@@ -1,170 +1,100 @@
-# santosh_1837
 #include <stdio.h>
 
-#define MAX_DRIVERS 5
-#define ID_DIGITS 4 // Assuming driver IDs are 4-digit numbers
-
-// Structure to hold driver data (using only integers)
-struct Driver {
-    int id; // Unique driver ID
-    int available; // 1 for available, 0 for unavailable
-    int current_route_id; // ID of the route currently assigned
-};
-
-struct Driver drivers[MAX_DRIVERS];
-int driver_count = 0;
-
-// Function to initialize the system
-void initialize_drivers() {
-    int i;
-    for (i = 0; i < MAX_DRIVERS; i++) {
-        drivers[i].id = 0;
-        drivers[i].available = 0;
-        drivers[i].current_route_id = 0;
-    }
-}
-
-// Function to add a new driver
-void add_driver(int new_id) {
-    if (driver_count < MAX_DRIVERS) {
-        int i;
-        // Check for existing ID
-        for (i = 0; i < driver_count; i++) {
-            if (drivers[i].id == new_id) {
-                printf("Error: Driver with ID %d already exists.\n", new_id);
-                return;
-            }
-        }
-        drivers[driver_count].id = new_id;
-        drivers[driver_count].available = 1; // New drivers are available by default
-        drivers[driver_count].current_route_id = 0; // No route assigned initially
-        driver_count++;
-        printf("Driver with ID %d added successfully.\n", new_id);
-    } else {
-        printf("Error: Maximum number of drivers reached.\n");
-    }
-}
-
-// Function to display all drivers
-void display_drivers() {
-    int i;
-    if (driver_count == 0) {
-        printf("No drivers in the system.\n");
-        return;
-    }
-    printf("\n--- Driver List ---\n");
-    for (i = 0; i < driver_count; i++) {
-        printf("ID: %d, Available: %d, Current Route: %d\n",
-               drivers[i].id, drivers[i].available, drivers[i].current_route_id);
-    }
-    printf("-------------------\n");
-}
-
-// Function to update driver availability
-void update_driver_availability(int driver_id, int status) {
-    int i;
-    for (i = 0; i < driver_count; i++) {
-        if (drivers[i].id == driver_id) {
-            drivers[i].available = status;
-            printf("Driver %d availability updated to %d.\n", driver_id, status);
-            return;
-        }
-    }
-    printf("Error: Driver with ID %d not found.\n", driver_id);
-}
-
-// Function to assign a route to a driver
-void assign_route(int driver_id, int route_id) {
-    int i;
-    for (i = 0; i < driver_count; i++) {
-        if (drivers[i].id == driver_id) {
-            if (drivers[i].available == 1) {
-                drivers[i].current_route_id = route_id;
-                drivers[i].available = 0; // Driver is no longer available
-                printf("Route %d assigned to driver %d.\n", route_id, driver_id);
-            } else {
-                printf("Error: Driver %d is not available.\n", driver_id);
-            }
-            return;
-        }
-    }
-    printf("Error: Driver with ID %d not found.\n", driver_id);
-}
-
-// Function to complete a route
-void complete_route(int driver_id) {
-    int i;
-    for (i = 0; i < driver_count; i++) {
-        if (drivers[i].id == driver_id) {
-            if (drivers[i].current_route_id != 0) {
-                printf("Driver %d completed route %d.\n", driver_id, drivers[i].current_route_id);
-                drivers[i].current_route_id = 0;
-                drivers[i].available = 1; // Driver is now available
-            } else {
-                printf("Error: Driver %d is not currently on a route.\n", driver_id);
-            }
-            return;
-        }
-    }
-    printf("Error: Driver with ID %d not found.\n", driver_id);
-}
-
 int main() {
-    initialize_drivers();
 
-    int choice, id, status, route_id;
+    int choice;
+
+    // Driver variables (only ONE driver can exist)
+    int driver_id = 0;
+    int driver_available = 0;      // 1 = available, 0 = unavailable
+    int driver_route = 0;          // 0 = no route assigned
 
     do {
         printf("\n--- Driver Management System ---\n");
         printf("1. Add Driver\n");
-        printf("2. Display Drivers\n");
-        printf("3. Update Driver Availability\n");
+        printf("2. Display Driver\n");
+        printf("3. Update Availability\n");
         printf("4. Assign Route\n");
         printf("5. Complete Route\n");
         printf("0. Exit\n");
+
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                printf("Enter new driver ID (e.g., 1001): ");
-                scanf("%d", &id);
-                add_driver(id);
-                break;
-            case 2:
-                display_drivers();
-                break;
-            case 3:
-                printf("Enter driver ID to update: ");
-                scanf("%d", &id);
-                printf("Enter new availability status (1 for available, 0 for unavailable): ");
-                scanf("%d", &status);
-                update_driver_availability(id, status);
-                break;
-            case 4:
-                printf("Enter driver ID to assign route: ");
-                scanf("%d", &id);
-                printf("Enter route ID: ");
-                scanf("%d", &route_id);
-                assign_route(id, route_id);
-                break;
-            case 5:
-                printf("Enter driver ID to complete route: ");
-                scanf("%d", &id);
-                complete_route(id);
-                break;
-            case 0:
-                printf("Exiting program.\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+        if (choice == 1) {
+            // Add driver
+            printf("Enter Driver ID: ");
+            scanf("%d", &driver_id);
+
+            driver_available = 1;   // new driver is available
+            driver_route = 0;
+
+            printf("Driver added successfully.\n");
         }
+
+        else if (choice == 2) {
+            // Display driver
+            if (driver_id == 0) {
+                printf("No driver added yet.\n");
+            } else {
+                printf("\nDriver ID       : %d\n", driver_id);
+                printf("Availability    : %d\n", driver_available);
+                printf("Current Route   : %d\n", driver_route);
+            }
+        }
+
+        else if (choice == 3) {
+            // Update availability
+            if (driver_id == 0) {
+                printf("No driver to update.\n");
+            } else {
+                printf("Enter new availability (1 = available, 0 = unavailable): ");
+                scanf("%d", &driver_available);
+                printf("Availability updated.\n");
+            }
+        }
+
+        else if (choice == 4) {
+            // Assign route
+            if (driver_id == 0) {
+                printf("Add a driver first.\n");
+            } else if (driver_available == 0) {
+                printf("Driver unavailable. Cannot assign route.\n");
+            } else if (driver_route != 0) {
+                printf("Driver already on route %d.\n", driver_route);
+            } else {
+                printf("Enter Route ID: ");
+                scanf("%d", &driver_route);
+                driver_available = 0; // once assigned, not available
+                printf("Route assigned.\n");
+            }
+        }
+
+        else if (choice == 5) {
+            // Complete route
+            if (driver_id == 0) {
+                printf("Driver not added.\n");
+            } else if (driver_route == 0) {
+                printf("Driver has no assigned route.\n");
+            } else {
+                printf("Route %d completed.\n", driver_route);
+                driver_route = 0;
+                driver_available = 1; // driver becomes available again
+            }
+        }
+
+        else if (choice == 0) {
+            printf("Exiting...\n");
+        }
+
+        else {
+            printf("Invalid choice. Try again.\n");
+        }
+
     } while (choice != 0);
 
-    return 0;
-}give me the project title , functional requirements,project feature,how to run the project,screenshots of the output.
-
-Here is your full project documentation for the Driver Management System in C — including Project Title, Abstract, Functional Requirements, Features, How to Run, and Output Screenshots (ASCII mock-ups).
+    return 0;
+}
 
 📌 Project Title
 
