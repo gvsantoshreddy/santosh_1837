@@ -1,3 +1,4 @@
+
 📌 Project Title
 
 Driver Management System in C
@@ -100,24 +101,22 @@ Press 4 → Assign route
 
 ⿡ Main Menu
 
---- Driver Management System --- 1. Add Driver 2. Display Drivers 3. Update Driver Availability 4. Assign Route 5. Complete Route 0. Exit Enter your choice: 
+<img width="462" height="210" alt="Screenshot 2025-11-27 101514" src="https://github.com/user-attachments/assets/c83bc3de-dd41-4e17-98e9-914bbbd2e8d2" />
 
 ⿢ Adding a Driver
 
-Enter new driver ID (e.g., 1001): 1001 Driver with ID 1001 added successfully. 
-
+<img width="346" height="245" alt="Screenshot 2025-11-27 101503" src="https://github.com/user-attachments/assets/82851766-4bad-4fcf-bd10-384beaca6173" />
 ⿣ Display Drivers
 
---- Driver List --- ID: 1001, Available: 1, Current Route: 0 ------------------- 
+<img width="365" height="258" alt="Screenshot 2025-11-27 101450" src="https://github.com/user-attachments/assets/2037af33-09f1-43be-8fb0-f0d481f068a9" />
 
 ⿤ Assign Route
 
-Enter driver ID to assign route: 1001 Enter route ID: 200 Route 200 assigned to driver 1001. 
+<img width="500" height="266" alt="Screenshot 2025-11-27 101434" src="https://github.com/user-attachments/assets/3fc9d26d-f768-4938-8f62-d3aecc4b0e69" /> driver 1001. 
 
 ⿥ Completing a Route
 
-Enter driver ID to complete route: 1001 Driver 1001 completed route 200. 
-
+<img width="302" height="333" alt="Screenshot 2025-11-27 101402" src="https://github.com/user-attachments/assets/73a15d14-f414-4782-b4c0-e0ac17495ca7" />
 ⿦ Error Example: Duplicate ID
 
-Enter new driver ID (e.g., 1001): 1001 Error: Driver with ID 1001 already exists.
+<img width="311" height="242" alt="Screenshot 2025-11-27 101349" src="https://github.com/user-attachments/assets/30cb40bd-8016-4ba9-bf39-769517909ee1" />
